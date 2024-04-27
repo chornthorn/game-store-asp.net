@@ -1,3 +1,6 @@
+using GameStore.Api.Authorization;
+using GameStore.Api.Core.attributes;
+using GameStore.Api.Core.types;
 using GameStore.Api.Dtos;
 
 namespace GameStore.Api.Games;
@@ -30,8 +33,10 @@ public static class GamesController
             var game = await gamesService.CreateGame(createGameDto);
             return Results.Created($"/games/{game.Id}", game);
         })
-         .WithParameterValidation()
-         .RequireAuthorization();
+        .RequireAuthorization(policy =>
+        {
+            policy.RequireRole("Admin");
+        });
 
         gameGroup.MapPut("/{id}", async (GamesService gamesService, int id, UpdateGameDto updateGameDto) =>
         {
@@ -54,7 +59,7 @@ public static class GamesController
             }
             return Results.NoContent();
         })
-        .RequireAuthorization();
+        .RequireAuthorization(policy => policy.GamesDelete());
 
         return gameGroup;
     }
