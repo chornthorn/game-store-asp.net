@@ -30,7 +30,8 @@ public static class GamesController
             var game = await gamesService.CreateGame(createGameDto);
             return Results.Created($"/games/{game.Id}", game);
         })
-         .WithParameterValidation();
+         .WithParameterValidation()
+         .RequireAuthorization();
 
         gameGroup.MapPut("/{id}", async (GamesService gamesService, int id, UpdateGameDto updateGameDto) =>
         {
@@ -40,7 +41,9 @@ public static class GamesController
                 return Results.NotFound();
             }
             return Results.Ok(game);
-        });
+        })
+        .WithParameterValidation()
+        .RequireAuthorization();
 
         gameGroup.MapDelete("/{id}", async (GamesService gamesService, int id) =>
         {
@@ -50,7 +53,8 @@ public static class GamesController
                 return Results.NotFound();
             }
             return Results.NoContent();
-        });
+        })
+        .RequireAuthorization();
 
         return gameGroup;
     }

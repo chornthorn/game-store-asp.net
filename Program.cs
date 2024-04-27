@@ -6,6 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AutoDependencyInjection();
 builder.Services.ManualDependency();
 
+builder.Services.AddAuthentication().AddBearerToken();
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 // Initialize database
