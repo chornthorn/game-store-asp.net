@@ -22,3 +22,14 @@ services:
             MYSQL_ROOT_PASSWORD: 123456
         ports:
             - 8080:80
+
+    gamestore:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - 3000:8080
+        depends_on:
+            - db
+        environment:
+            ConnectionStrings__DefaultConnection: "server=db;port=3306;database=aspnetcore;user=root;password=123456"
