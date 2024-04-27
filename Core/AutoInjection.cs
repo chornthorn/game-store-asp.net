@@ -66,7 +66,6 @@ public static class ServiceCollectionExtensions
 
             if (dependencies != null)
             {
-
                 // if service not have dependencies
                 if (dependencies.Count == 0)
                 {
@@ -76,7 +75,6 @@ public static class ServiceCollectionExtensions
                 {
                     Console.WriteLine($"{type.Name} -> {string.Join(" -> ", dependencies)}");
                 }
-
             }
             else
             {

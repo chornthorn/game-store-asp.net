@@ -15,12 +15,12 @@ public static class ApplicationDependency
     }
 
     // Initialize database
-    public static void InitializeDatabase(this IApplicationBuilder app)
+    public static async Task InitializeDatabase(this IApplicationBuilder app)
     {
         using var scope = app.ApplicationServices.CreateScope();
         var services = scope.ServiceProvider;
         var context = services.GetRequiredService<GameStoreContext>();
-        context.Database.Migrate();
+        await context.Database.MigrateAsync();
     }
 
     public static IServiceCollection ManualDependency(this IServiceCollection services)
